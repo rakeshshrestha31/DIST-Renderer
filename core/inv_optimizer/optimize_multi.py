@@ -74,6 +74,8 @@ def optimize_multi_view(renderer, evaluator, shape_code, shape_optimizer, images
                                         weight_list,
                                         sim3=sim_mtrx, sim3_scale=sim3_scale,
                                         visualizer=visualizer)
+                # visualizer.show_all_data_color_warp(os.path.join(vis_dir, 'vis_{}.png'.format(epoch)))
+                # exit(0)
                 loss_total += loss
 
             counter += 1

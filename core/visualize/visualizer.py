@@ -328,12 +328,15 @@ class Visualizer(object):
         plt.close('all')
 
     def show_all_data_color_warp(self, fname):
-        fig, axs = plt.subplots(1, 5, figsize=(15, 3.4))
-        self.imshow_bgr2rgb(axs[0], self.data['color_gt-1'], title='view 1')
-        self.imshow_bgr2rgb(axs[1], self.data['color_gt-2'], title='view 2')
-        self.imshow_bgr2rgb(axs[2], self.data['color_valid-1'], title='valid region in view 1')
-        self.imshow_bgr2rgb(axs[3], self.data['color_valid-2'], title='warped color from view 2')
-        self.imshow_bgr2rgb(axs[4], self.data['color_valid_loss'], title='color loss')
+        fig, axs = plt.subplots(2, 4, figsize=(15, 3.4))
+        self.imshow_bgr2rgb(axs[0, 0], self.data['color_gt-1'], title='view 1')
+        self.imshow_bgr2rgb(axs[0, 1], self.data['color_gt-2'], title='view 2')
+        self.imshow_bgr2rgb(axs[0, 2], self.data['mask_valid-1'], title='mask 1')
+        self.imshow_bgr2rgb(axs[0, 3], self.data['mask_valid-2'], title='mask 2')
+        self.imshow_bgr2rgb(axs[1, 0], self.data['depth_valid-1'], title='depth 1')
+        self.imshow_bgr2rgb(axs[1, 1], self.data['color_valid-1'], title='valid region in view 1')
+        self.imshow_bgr2rgb(axs[1, 2], self.data['color_valid-2'], title='warped color from view 2')
+        self.imshow_bgr2rgb(axs[1, 3], self.data['color_valid_loss'], title='color loss')
 
         # savefig
         plt.subplots_adjust(top=0.99, right=0.99, left=0.01, bottom=0.00, wspace=0.05, hspace=0)

@@ -27,10 +27,17 @@ def compute_loss_color_warp(sdf_renderer, shape_code, images, cameras, idx1, idx
     render_output = sdf_renderer.render_warp(shape_code, R1, T1, R2, T2, view1, view2, no_grad_normal=True)
     loss_color, color_valid_1, color_valid_2, valid_mask1, valid_mask2, min_sdf_sample1, min_sdf_sample2, normal1, depth1_rendered = render_output
 
+    depth1_rendered_viz = depth1_rendered.unsqueeze(-1).expand(-1, -1, 3)
+    valid_mask1_viz = valid_mask1.unsqueeze(-1).expand(-1, -1, 3)
+    valid_mask2_viz = valid_mask2.unsqueeze(-1).expand(-1, -1, 3)
+
     if visualizer is not None:
         visualizer.reset_data()
         visualizer.add_data('color_gt-1', view1.detach().cpu().numpy())
         visualizer.add_data('color_gt-2', view2.detach().cpu().numpy())
+        visualizer.add_data('mask_valid-1', torch.abs(valid_mask1_viz).detach().cpu().numpy())
+        visualizer.add_data('mask_valid-2', torch.abs(valid_mask2_viz).detach().cpu().numpy())
+        visualizer.add_data('depth_valid-1', torch.abs(depth1_rendered_viz).detach().cpu().numpy())
         visualizer.add_data('color_valid-1', color_valid_1.detach().cpu().numpy())
         visualizer.add_data('color_valid-2', color_valid_2.detach().cpu().numpy())
         visualizer.add_data('color_valid_loss', torch.abs(color_valid_1-color_valid_2).detach().cpu().numpy())
