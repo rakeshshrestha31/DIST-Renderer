@@ -5,4 +5,5 @@ from mesh_dataset import *
 from loader_single import *
 from loader_multi_pmodata import *
 from loader_multi_realdata import *
+from loader_multi_ocrtoc import *
 from loader_color import *
